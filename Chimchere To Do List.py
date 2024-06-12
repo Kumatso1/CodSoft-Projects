@@ -127,7 +127,7 @@ class ToDoApp:
 
     def show_message(self, message):
         self.message_label.config(text=message)
-        self.master.after(5000, lambda: self.message_label.config(text=""))  # Clear message after 5 seconds
+        self.master.after(15000, lambda: self.message_label.config(text=""))  # Clear message after 15 seconds
   
     def update_task_colors(self):
         now = datetime.now()
@@ -136,12 +136,19 @@ class ToDoApp:
             duration=task.end_time-task.start_time
             if task.status == "Pending" and time_remaining:
                 if time_remaining>timedelta(minutes=10):
+                    # The task row will be in gray indicating that there is still more time
+                    #  before the stating time of the task (remaining time to start the task is greater than 10 minutes)
                     self.task_list.itemconfig(i, {'bg':'gray'})
                 elif time_remaining <= timedelta(minutes=10) and time_remaining>timedelta(minutes=0):
+                    # The task row will change to yellow indicating that less than 10 minutes remaining
+                    # before the starting time of the task
                     self.task_list.itemconfig(i, {'bg':'yellow'})
                 elif time_remaining <= timedelta(minutes=0) and abs(time_remaining)<duration:
+                    # The task row will change to orange colour indicating that the time it was supposed 
+                    # to be started has reached and the task is in progress
                     self.task_list.itemconfig(i, {'bg':'orange'})
                 else:
+                    # The task row will change to red indicating that the time iwas supposed to be completed has passed
                     self.task_list.itemconfig(i, {'bg':'red'})
         self.master.after(60000, self.update_task_colors)  # Call again after 1 minute (60000 milliseconds)
 
