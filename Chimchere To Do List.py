@@ -2,21 +2,20 @@ import tkinter as tk
 from datetime import datetime, timedelta
 
 class Task:
-    def __init__(self, name, start_time, end_time, status="Pending", remarks=""):
+    def __init__(self, name, start_time, end_time, status="Pending"):
         self.name = name
         self.start_time = start_time
         self.end_time = end_time
         self.status = status
-        self.remarks = remarks
 
-    def duration(self):
-        return self.end_time - self.start_time
+    
 
 class ToDoApp:
     def __init__(self, master):
         self.master = master
         self.tasks = []
-        
+
+    
         # Create labels and entry boxes for input
         self.name_label = tk.Label(master, text="Task Name:")
         self.name_label.grid(row=0, column=0)
@@ -59,7 +58,7 @@ class ToDoApp:
         master.grid_columnconfigure(1, weight=1)
 
         self.update_task_colors()  # Start the task color update loop
-
+    
     def add_task_gui(self):
         try:
             name = self.name_entry.get()
@@ -129,25 +128,21 @@ class ToDoApp:
     def show_message(self, message):
         self.message_label.config(text=message)
         self.master.after(5000, lambda: self.message_label.config(text=""))  # Clear message after 5 seconds
-
+  
     def update_task_colors(self):
         now = datetime.now()
         for i, task in enumerate(self.tasks):
             time_remaining = task.start_time - now
-            if task.status == "Pending":
-                if time_remaining <= timedelta(minutes=10):
-                    self.task_list.itemconfig(i, {'bg':'orange'})
-                elif time_remaining <= timedelta(0):
-                    self.task_list.itemconfig(i, {'bg':'red'})
-                else:
+            duration=task.end_time-task.start_time
+            if task.status == "Pending" and time_remaining:
+                if time_remaining>timedelta(minutes=10):
                     self.task_list.itemconfig(i, {'bg':'gray'})
-            elif task.status == "Completed":
-                self.task_list.itemconfig(i, {'bg':'green'})
-            elif task.status == "Postponed":
-                self.task_list.itemconfig(i, {'bg':'yellow'})
-            else:
-                self.task_list.itemconfig(i, {'bg':'brown'})
-
+                elif time_remaining <= timedelta(minutes=10) and time_remaining>timedelta(minutes=0):
+                    self.task_list.itemconfig(i, {'bg':'yellow'})
+                elif time_remaining <= timedelta(minutes=0) and abs(time_remaining)<duration:
+                    self.task_list.itemconfig(i, {'bg':'orange'})
+                else:
+                    self.task_list.itemconfig(i, {'bg':'red'})
         self.master.after(60000, self.update_task_colors)  # Call again after 1 minute (60000 milliseconds)
 
 def main():

@@ -54,7 +54,7 @@ window = tk.Tk()
 window.title("Simple Calculator")
 
 # Create entry field
-entry = tk.Entry(window, font=("Arial", 20), borderwidth=2, relief="solid")
+entry = tk.Entry(window, font=("Arial", 20), borderwidth=2, relief="solid",bg="aquamarine")
 entry.grid(row=0, column=0, columnspan=4, ipadx=8, ipady=8, sticky="nsew")
 
 # Create buttons
@@ -79,7 +79,7 @@ for (text, row, col) in buttons:
     elif text == '√':
         btn = tk.Button(window, text=text, font=("Arial", 18), bg="lightgreen", command=sqrt)
     else:
-        btn = tk.Button(window, text=text, font=("Arial", 18), command=lambda t=text: click_button(t))
+        btn = tk.Button(window, text=text, font=("Arial", 18), bg="skyblue", command=lambda t=text: click_button(t))
 
     btn.grid(row=row, column=col, sticky="nsew", padx=5, pady=5)
 
