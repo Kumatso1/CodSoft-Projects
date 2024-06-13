@@ -128,7 +128,7 @@ class ToDoApp:
     def show_message(self, message):
         self.message_label.config(text=message)
         self.master.after(15000, lambda: self.message_label.config(text=""))  # Clear message after 15 seconds
-  
+    # This function is used to change colours of the task depending on time
     def update_task_colors(self):
         now = datetime.now()
         for i, task in enumerate(self.tasks):
