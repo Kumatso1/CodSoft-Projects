@@ -70,7 +70,7 @@ class ToDoApp:
             self.end_time_entry.delete(0, tk.END)
         except ValueError:
             self.show_message("Invalid date format. Please use YYYY-MM-DD HH:MM:SS")
-
+    # This is the function for adding task to the list
     def add_task(self, name, start_time, end_time):
         task = Task(name, start_time, end_time)
         self.tasks.append(task)
