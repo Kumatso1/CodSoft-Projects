@@ -53,7 +53,7 @@ def sqrt():
 window = tk.Tk()
 window.title("Simple Calculator")
 
-# Create entry field
+# Create entry field for the calculator
 entry = tk.Entry(window, font=("Arial", 20), borderwidth=2, relief="solid",bg="aquamarine")
 entry.grid(row=0, column=0, columnspan=4, ipadx=8, ipady=8, sticky="nsew")
 
